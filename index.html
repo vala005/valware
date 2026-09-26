@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nirvala Ramnarine — valware</title>
+<meta name="description" content="Portfolio of Nirvala Ramnarine (valware) — Computer Science student, web developer and graphic designer.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+  /* ============================================
+     TOKENS
+     ============================================ */
+  :root{
+    --void:        #0a0118;
+    --panel:       #130a26;
+    --panel-alt:   #1b0f38;
+    --line:        rgba(0, 240, 255, 0.22);
+    --line-soft:   rgba(255, 255, 255, 0.08);
+
+    --cyan:        #00f0ff;
+    --magenta:     #ff2ec4;
+    --amber:       #ffb627;
+
+    --text:        #ece6fa;
+    --text-dim:    #a99cc7;
+    --text-faint:  #6d6088;
+
+    --font-head:   'Chakra Petch', sans-serif;
+    --font-body:   'Space Mono', monospace;
+
+    --max: 1100px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  body{
+    margin: 0;
+    background: var(--void);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img{ max-width: 100%; display: block; }
+
+  a{ color: var(--cyan); }
+
+  ::selection{ background: var(--magenta); color: var(--void); }
+
+  :focus-visible{
+    outline: 2px solid var(--cyan);
+    outline-offset: 3px;
+  }
+
+  h1, h2, h3{
+    font-family: var(--font-head);
+    font-weight: 600;
+    margin: 0;
+    color: var(--text);
+    letter-spacing: 0.01em;
+  }
+
+  .wrap{
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  section{
+    padding: 110px 0;
+    border-bottom: 1px solid var(--line-soft);
+    position: relative;
+  }
+
+  /* faint scanline texture across the whole page */
+  body::before{
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.014) 0px,
+      rgba(255,255,255,0.014) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    mix-blend-mode: overlay;
+  }
+
+  /* ============================================
+     NAV
+     ============================================ */
+  header{
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(10, 1, 24, 0.82);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .nav{
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-id{
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--cyan);
+  }
+  .nav-id span{ color: var(--text-faint); }
+
+  .nav-links{
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    margin: 0; padding: 0;
+  }
+  .nav-links a{
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.9rem;
+    position: relative;
+    padding: 4px 0;
+  }
+  .nav-links a:hover{ color: var(--cyan); }
+  .nav-links a::after{
+    content: "";
+    position: absolute;
+    left: 0; bottom: -2px;
+    width: 0; height: 1px;
+    background: var(--cyan);
+    transition: width 0.2s ease;
+  }
+  .nav-links a:hover::after{ width: 100%; }
+
+  .nav-toggle{ display: none; }
+
+  /* ============================================
+     HERO
+     ============================================ */
+  .hero{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 130px;
+    border-bottom: 1px solid var(--line-soft);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* perspective grid floor */
+  .hero-grid{
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 45%;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 48px 48px;
+    transform: perspective(320px) rotateX(62deg);
+    transform-origin: bottom;
+    -webkit-mask-image: linear-gradient(to top, black, transparent);
+            mask-image: linear-gradient(to top, black, transparent);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .hero-glow{
+    position: absolute;
+    top: -10%; right: -10%;
+    width: 55%; height: 60%;
+    background: radial-gradient(circle, rgba(255,46,196,0.20) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-inner{
+    position: relative;
+    z-index: 2;
+    max-width: 720px;
+  }
+
+  .hero-eyebrow{
+    color: var(--text-faint);
+    font-size: 0.85rem;
+    margin-bottom: 18px;
+  }
+  .hero-eyebrow .cursor{
+    display: inline-block;
+    width: 8px; height: 15px;
+    background: var(--cyan);
+    margin-left: 4px;
+    animation: blink 1.1s steps(2, start) infinite;
+    vertical-align: -2px;
+  }
+  @keyframes blink{ to{ visibility: hidden; } }
+
+  .hero h1{
+    font-size: clamp(2.6rem, 6.5vw, 4.6rem);
+    line-height: 1.05;
+    margin-bottom: 6px;
+  }
+
+  .glitch{
+    position: relative;
+    display: inline-block;
+    color: var(--text);
+  }
+  .glitch::before,
+  .glitch::after{
+    content: attr(data-text);
+    position: absolute;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: var(--void);
+    clip-path: inset(0 0 0 0);
+  }
+  .glitch::before{
+    color: var(--cyan);
+    animation: glitchTop 4.5s infinite linear;
+  }
+  .glitch::after{
+    color: var(--magenta);
+    animation: glitchBottom 4.5s infinite linear;
+  }
+  @keyframes glitchTop{
+    0%, 92%, 100%{ clip-path: inset(0 0 100% 0); transform: translate(0,0); }
+    93%{ clip-path: inset(0 0 60% 0); transform: translate(-2px,-1px); }
+    95%{ clip-path: inset(30% 0 40% 0); transform: translate(2px,1px); }
+    97%{ clip-path: inset(60% 0 5% 0); transform: translate(-1px,0); }
+  }
+  @keyframes glitchBottom{
+    0%, 91%, 100%{ clip-path: inset(100% 0 0 0); transform: translate(0,0); }
+    93%{ clip-path: inset(65% 0 0 0); transform: translate(2px,1px); }
+    95%{ clip-path: inset(10% 0 55% 0); transform: translate(-2px,-1px); }
+    97%{ clip-path: inset(0 0 75% 0); transform: translate(1px,0); }
+  }
+
+  .hero-handle{
+    font-family: var(--font-body);
+    color: var(--magenta);
+    font-size: 1.15rem;
+    margin: 10px 0 28px;
+  }
+  .hero-handle::before{ content: "@"; color: var(--text-faint); }
+
+  .hero-desc{
+    color: var(--text-dim);
+    font-size: 1.02rem;
+    max-width: 54ch;
+    margin-bottom: 40px;
+  }
+
+  .hero-cta{
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn{
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    padding: 13px 26px;
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    background: transparent;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .btn:hover{ background: var(--cyan); color: var(--void); }
+
+  .btn-solid{
+    background: var(--magenta);
+    border-color: var(--magenta);
+    color: var(--void);
+  }
+  .btn-solid:hover{ background: transparent; color: var(--magenta); }
+
+  /* ============================================
+     SECTION HEADS
+     ============================================ */
+  .section-head{
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin-bottom: 56px;
+  }
+  .section-num{
+    color: var(--text-faint);
+    font-size: 0.9rem;
+  }
+  .section-head h2{
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+  }
+  .section-head .rule{
+    flex: 1;
+    height: 1px;
+    background: var(--line-soft);
+  }
+
+  /* ============================================
+     ABOUT
+     ============================================ */
+  .about-grid{
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .about-text p{ color: var(--text-dim); margin: 0 0 18px; }
+  .about-text strong{ color: var(--text); font-weight: 700; }
+
+  .terminal{
+    background: var(--panel);
+    border: 1px solid var(--line);
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.4), 0 20px 50px -20px rgba(0,240,255,0.15);
+  }
+  .terminal-bar{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--line-soft);
+    background: var(--panel-alt);
+  }
+  .terminal-dot{
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--text-faint);
+  }
+  .terminal-title{
+    margin-left: 8px;
+    font-size: 0.78rem;
+    color: var(--text-faint);
+  }
+  .terminal-body{
+    padding: 22px 20px;
+    font-size: 0.88rem;
+  }
+  .terminal-body .prompt{ color: var(--cyan); }
+  .terminal-body .path{ color: var(--magenta); }
+  .terminal-line{ margin: 0 0 10px; color: var(--text-dim); }
+  .terminal-line:last-child{ margin-bottom: 0; }
+
+  .skill-row{
+    display: grid;
+    grid-template-columns: 130px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    margin: 14px 0;
+  }
+  .skill-name{ color: var(--text); font-size: 0.82rem; }
+  .skill-bar{
+    height: 6px;
+    background: var(--panel-alt);
+    border: 1px solid var(--line-soft);
+    position: relative;
+  }
+  .skill-bar > span{
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, var(--cyan), var(--magenta));
+  }
+  .skill-pct{ font-size: 0.76rem; color: var(--text-faint); }
+
+  /* ============================================
+     CARDS (projects + designs share the base)
+     ============================================ */
+  .grid-2{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 26px;
+  }
+  .grid-3{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+
+  .card{
+    background: var(--panel);
+    border: 1px solid var(--line-soft);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .card:hover{
+    border-color: var(--line);
+    transform: translateY(-4px);
+  }
+
+  .card-bar{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line-soft);
+    background: var(--panel-alt);
+  }
+  .card-bar .terminal-dot:nth-child(1){ background: var(--magenta); }
+  .card-bar .terminal-dot:nth-child(2){ background: var(--amber); }
+  .card-bar .terminal-dot:nth-child(3){ background: var(--cyan); }
+  .card-status{
+    margin-left: auto;
+    font-size: 0.72rem;
+    color: var(--text-faint);
+  }
+
+  .card-art{
+    height: 150px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .card-art::after{
+    content: "";
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, rgba(0,0,0,0.15) 0 2px, transparent 2px 8px);
+  }
+
+  .card-body{ padding: 22px; }
+  .card-body h3{ font-size: 1.15rem; margin-bottom: 8px; }
+  .card-body p{
+    color: var(--text-dim);
+    font-size: 0.88rem;
+    margin: 0 0 16px;
+  }
+
+  .tag-row{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .tag{
+    font-size: 0.72rem;
+    color: var(--cyan);
+    border: 1px solid var(--line);
+    padding: 3px 9px;
+  }
+
+  .card-links{ display: flex; gap: 18px; }
+  .card-links a{
+    font-size: 0.82rem;
+    text-decoration: none;
+    color: var(--text-dim);
+    border-bottom: 1px solid transparent;
+  }
+  .card-links a:hover{ color: var(--cyan); border-color: var(--cyan); }
+
+  /* design-gallery specific art fills */
+  .art-01{ background: linear-gradient(135deg, #ff2ec4 0%, #6d1bff 55%, #0a0118 100%); }
+  .art-02{ background: linear-gradient(135deg, #00f0ff 0%, #1b0f38 70%); }
+  .art-03{ background: linear-gradient(135deg, #ffb627 0%, #ff2ec4 45%, #0a0118 100%); }
+  .art-04{ background: linear-gradient(135deg, #6d1bff 0%, #00f0ff 60%, #0a0118 100%); }
+  .art-05{ background: linear-gradient(135deg, #0a0118 0%, #ff2ec4 50%, #ffb627 100%); }
+  .art-06{ background: linear-gradient(135deg, #00f0ff 0%, #ff2ec4 100%); }
+
+  /* ============================================
+     CONTACT / FOOTER
+     ============================================ */
+  .contact{
+    border-bottom: none;
+    padding-bottom: 60px;
+  }
+  .contact-inner{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+  .contact h2{
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    max-width: 12ch;
+    line-height: 1.1;
+  }
+  .contact-links{
+    list-style: none;
+    margin: 0; padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .contact-links a{
+    text-decoration: none;
+    color: var(--text-dim);
+    font-size: 0.95rem;
+  }
+  .contact-links a:hover{ color: var(--magenta); }
+  .contact-links .k{ color: var(--text-faint); }
+
+  footer{
+    text-align: center;
+    padding: 26px 0 40px;
+    color: var(--text-faint);
+    font-size: 0.78rem;
+  }
+
+  /* ============================================
+     RESPONSIVE
+     ============================================ */
+  @media (max-width: 860px){
+    .about-grid{ grid-template-columns: 1fr; gap: 40px; }
+    .grid-2{ grid-template-columns: 1fr; }
+    .grid-3{ grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 640px){
+    section{ padding: 80px 0; }
+    .nav-links{
+      position: fixed;
+      top: 62px; left: 0; right: 0;
+      background: var(--void);
+      border-bottom: 1px solid var(--line-soft);
+      flex-direction: column;
+      padding: 20px 28px;
+      gap: 16px;
+      display: none;
+    }
+    .nav-links.open{ display: flex; }
+    .nav-toggle{
+      display: block;
+      background: none;
+      border: 1px solid var(--line);
+      color: var(--cyan);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      padding: 7px 12px;
+      cursor: pointer;
+    }
+    .grid-3{ grid-template-columns: 1fr; }
+    .contact-inner{ flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <div class="nav-id">nirvala<span>@</span>valware<span>:~$</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">about</a></li>
+      <li><a href="#projects">web_apps</a></li>
+      <li><a href="#designs">designs</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">menu</button>
+  </nav>
+</header>
+
+<!-- ============================================
+     HERO
+============================================ -->
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="wrap hero-inner">
+    <p class="hero-eyebrow">booting portfolio.exe<span class="cursor" aria-hidden="true"></span></p>
+    <h1><span class="glitch" data-text="Nirvala Ramnarine">Nirvala Ramnarine</span></h1>
+    <p class="hero-handle">valware</p>
+    <p class="hero-desc">
+      Year 3 Computer Science student building web applications and graphic
+      design work that live somewhere between clean engineering and a
+      neon-lit skyline. Currently studying, shipping side projects, and
+      looking for opportunities.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-solid">view web apps</a>
+      <a href="#designs" class="btn">view designs</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     ABOUT
+============================================ -->
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2>about</h2>
+      <span class="rule"></span>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm <strong>Nirvala</strong> — most people know me online as
+          <strong>valware</strong>. I'm in my third year of a Computer
+          Science degree, and over that time my interest has split evenly
+          between two things: building software that works properly, and
+          designing things that look like they belong in it.
+        </p>
+        <p>
+          On the development side I work mainly with web applications —
+          from small tools to full front-to-back projects — usually reaching
+          for JavaScript/TypeScript, React, and Node, with Python for
+          anything data or backend-logic heavy. On the design side, I put
+          together graphic work: branding, posters, UI concepts, and the
+          kind of dark, neon-accented visuals you can see running through
+          this site.
+        </p>
+        <p>
+          I like projects that force me to learn something new, and I care
+          about the small details — the ones most people don't notice until
+          they're missing.
+        </p>
+      </div>
+
+      <div class="terminal">
+        <div class="terminal-bar">
+          <span class="terminal-dot"></span>
+          <span class="terminal-dot"></span>
+          <span class="terminal-dot"></span>
+          <span class="terminal-title">stack.sh</span>
+        </div>
+        <div class="terminal-body">
+          <p class="terminal-line"><span class="prompt">$</span> whoami</p>
+          <p class="terminal-line">Nirvala Ramnarine — BSc Computer Science, Year 3</p>
+          <p class="terminal-line"><span class="prompt">$</span> ls <span class="path">~/skills</span></p>
+
+          <div class="skill-row">
+            <span class="skill-name">JavaScript</span>
+            <div class="skill-bar"><span style="width:85%"></span></div>
+            <span class="skill-pct">85%</span>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">React</span>
+            <div class="skill-bar"><span style="width:80%"></span></div>
+            <span class="skill-pct">80%</span>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Python</span>
+            <div class="skill-bar"><span style="width:75%"></span></div>
+            <span class="skill-pct">75%</span>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">UI / Design</span>
+            <div class="skill-bar"><span style="width:78%"></span></div>
+            <span class="skill-pct">78%</span>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Git</span>
+            <div class="skill-bar"><span style="width:82%"></span></div>
+            <span class="skill-pct">82%</span>
+          </div>
+
+          <p class="terminal-line" style="margin-top:16px;">
+            <span class="prompt">$</span> status
+          </p>
+          <p class="terminal-line">open to internships &amp; freelance work</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     WEB APPLICATIONS
+     Edit the three cards below with your real projects:
+     swap the h3 title, paragraph, .tag list, and the two
+     links (live demo / source code).
+============================================ -->
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2>web applications</h2>
+      <span class="rule"></span>
+    </div>
+
+    <div class="grid-2">
+
+      <article class="card">
+        <div class="card-bar">
+          <span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span>
+          <span class="card-status">build: passing</span>
+        </div>
+        <div class="card-art art-02" role="img" aria-label="Project preview graphic"></div>
+        <div class="card-body">
+          <h3>Project Name One</h3>
+          <p>
+            One or two sentences on what this application does, who it's
+            for, and the problem it solves. Keep it concrete and specific.
+          </p>
+          <div class="tag-row">
+            <span class="tag">React</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">MongoDB</span>
+          </div>
+          <div class="card-links">
+            <a href="#">live demo</a>
+            <a href="#">source code</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-bar">
+          <span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span>
+          <span class="card-status">build: passing</span>
+        </div>
+        <div class="card-art art-04" role="img" aria-label="Project preview graphic"></div>
+        <div class="card-body">
+          <h3>Project Name Two</h3>
+          <p>
+            One or two sentences on what this application does, who it's
+            for, and the problem it solves. Keep it concrete and specific.
+          </p>
+          <div class="tag-row">
+            <span class="tag">TypeScript</span>
+            <span class="tag">Next.js</span>
+            <span class="tag">PostgreSQL</span>
+          </div>
+          <div class="card-links">
+            <a href="#">live demo</a>
+            <a href="#">source code</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-bar">
+          <span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span>
+          <span class="card-status">in progress</span>
+        </div>
+        <div class="card-art art-01" role="img" aria-label="Project preview graphic"></div>
+        <div class="card-body">
+          <h3>Project Name Three</h3>
+          <p>
+            One or two sentences on what this application does, who it's
+            for, and the problem it solves. Keep it concrete and specific.
+          </p>
+          <div class="tag-row">
+            <span class="tag">Python</span>
+            <span class="tag">Flask</span>
+            <span class="tag">Docker</span>
+          </div>
+          <div class="card-links">
+            <a href="#">live demo</a>
+            <a href="#">source code</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-bar">
+          <span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span>
+          <span class="card-status">build: passing</span>
+        </div>
+        <div class="card-art art-06" role="img" aria-label="Project preview graphic"></div>
+        <div class="card-body">
+          <h3>Project Name Four</h3>
+          <p>
+            One or two sentences on what this application does, who it's
+            for, and the problem it solves. Keep it concrete and specific.
+          </p>
+          <div class="tag-row">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Express</span>
+            <span class="tag">REST API</span>
+          </div>
+          <div class="card-links">
+            <a href="#">live demo</a>
+            <a href="#">source code</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     GRAPHIC DESIGNS
+     Replace each .card-art div with a real <img> tag
+     pointing at your own design file, e.g.:
+     <img src="assets/designs/piece-01.jpg" alt="...">
+============================================ -->
+<section id="designs">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2>graphic designs</h2>
+      <span class="rule"></span>
+    </div>
+
+    <div class="grid-3">
+
+      <article class="card">
+        <div class="card-art art-01" role="img" aria-label="Design piece preview"></div>
+        <div class="card-body">
+          <h3>Design Piece One</h3>
+          <p>Short note on the brief, medium, or software used.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-art art-02" role="img" aria-label="Design piece preview"></div>
+        <div class="card-body">
+          <h3>Design Piece Two</h3>
+          <p>Short note on the brief, medium, or software used.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-art art-03" role="img" aria-label="Design piece preview"></div>
+        <div class="card-body">
+          <h3>Design Piece Three</h3>
+          <p>Short note on the brief, medium, or software used.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-art art-04" role="img" aria-label="Design piece preview"></div>
+        <div class="card-body">
+          <h3>Design Piece Four</h3>
+          <p>Short note on the brief, medium, or software used.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-art art-05" role="img" aria-label="Design piece preview"></div>
+        <div class="card-body">
+          <h3>Design Piece Five</h3>
+          <p>Short note on the brief, medium, or software used.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-art art-06" role="img" aria-label="Design piece preview"></div>
+        <div class="card-body">
+          <h3>Design Piece Six</h3>
+          <p>Short note on the brief, medium, or software used.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     CONTACT
+============================================ -->
+<section id="contact" class="contact">
+  <div class="wrap contact-inner">
+    <h2>let's build<br>something.</h2>
+    <ul class="contact-links">
+      <li><span class="k">email </span><a href="mailto:you@example.com">you@example.com</a></li>
+      <li><span class="k">github </span><a href="https://github.com/valware" target="_blank" rel="noopener">github.com/valware</a></li>
+      <li><span class="k">linkedin </span><a href="#" target="_blank" rel="noopener">linkedin.com/in/your-handle</a></li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">© 2026 Nirvala Ramnarine · built by valware</div>
+</footer>
+
+<script>
+  // mobile nav toggle
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+  });
+  links.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      links.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
+</body>
+</html>
