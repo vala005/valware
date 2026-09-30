@@ -11,9 +11,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
 <style>
-  /* ============================================
-     TOKENS
-     ============================================ */
   :root{
     --void:        #0a0118;
     --panel:       #130a26;
@@ -297,10 +294,7 @@
     color: var(--void);
   }
   .btn-solid:hover{ background: transparent; color: var(--magenta); }
-
-  /* ============================================
-     SECTION HEADS
-     ============================================ */
+  
   .section-head{
     display: flex;
     align-items: baseline;
@@ -320,9 +314,6 @@
     background: var(--line-soft);
   }
 
-  /* ============================================
-     ABOUT
-     ============================================ */
   .about-grid{
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
@@ -386,9 +377,7 @@
   }
   .skill-pct{ font-size: 0.76rem; color: var(--text-faint); }
 
-  /* ============================================
-     CARDS (projects + designs share the base)
-     ============================================ */
+/* CARD */
   .grid-2{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -477,9 +466,6 @@
   .art-05{ background: linear-gradient(135deg, #0a0118 0%, #ff2ec4 50%, #ffb627 100%); }
   .art-06{ background: linear-gradient(135deg, #00f0ff 0%, #ff2ec4 100%); }
 
-  /* ============================================
-     CONTACT / FOOTER
-     ============================================ */
   .contact{
     border-bottom: none;
     padding-bottom: 60px;
@@ -518,9 +504,6 @@
     font-size: 0.78rem;
   }
 
-  /* ============================================
-     RESPONSIVE
-     ============================================ */
   @media (max-width: 860px){
     .about-grid{ grid-template-columns: 1fr; gap: 40px; }
     .grid-2{ grid-template-columns: 1fr; }
@@ -570,9 +553,6 @@
   </nav>
 </header>
 
-<!-- ============================================
-     HERO
-============================================ -->
 <section class="hero">
   <div class="hero-grid" aria-hidden="true"></div>
   <div class="hero-glow" aria-hidden="true"></div>
@@ -593,9 +573,6 @@
   </div>
 </section>
 
-<!-- ============================================
-     ABOUT
-============================================ -->
 <section id="about">
   <div class="wrap">
     <div class="section-head">
@@ -607,15 +584,15 @@
     <div class="about-grid">
       <div class="about-text">
         <p>
-          I'm <strong>Nirvala</strong> — most people know me online as
-          <strong>valware</strong>. I'm in my third year of a Computer
+          I'm <strong>Nirvala</strong>, most people know me online as
+          <strong>vala</strong>. I'm in my third year of a Computer
           Science degree, and over that time my interest has split evenly
           between two things: building software that works properly, and
           designing things that look like they belong in it.
         </p>
         <p>
-          On the development side I work mainly with web applications —
-          from small tools to full front-to-back projects — usually reaching
+          On the development side I work mainly with web applications
+          from small tools to full front-to-back projects usually reaching
           for JavaScript/TypeScript, React, and Node, with Python for
           anything data or backend-logic heavy. On the design side, I put
           together graphic work: branding, posters, UI concepts, and the
@@ -624,7 +601,7 @@
         </p>
         <p>
           I like projects that force me to learn something new, and I care
-          about the small details — the ones most people don't notice until
+          about the small details the ones most people don't notice until
           they're missing.
         </p>
       </div>
@@ -677,12 +654,6 @@
   </div>
 </section>
 
-<!-- ============================================
-     WEB APPLICATIONS
-     Edit the three cards below with your real projects:
-     swap the h3 title, paragraph, .tag list, and the two
-     links (live demo / source code).
-============================================ -->
 <section id="projects">
   <div class="wrap">
     <div class="section-head">
@@ -868,7 +839,7 @@
   <div class="wrap contact-inner">
     <h2>let's build<br>something.</h2>
     <ul class="contact-links">
-      <li><span class="k">email </span><a href="mailto:nirvala007@gmail.com">you@example.com</a></li>
+      <li><span class="k">email </span><a href="mailto:nirvala007@gmail.com">nirvala007@gmail.com</a></li>
       <li><span class="k">github </span><a href="https://github.com/valware" target="_blank" rel="noopener">github.com/valware</a></li>
       <li><span class="k">linkedin </span><a href="www.linkedin.com/in/nirvala-ramnarine-0a2b87278" target="_blank" rel="noopener">Nirvala L. Ramnarien</a></li>
     </ul>
