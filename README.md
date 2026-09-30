@@ -11,7 +11,7 @@ everything in between. Dark UI, neon cyan/magenta accents, terminal-style
 panels, and a glitching hero title, built entirely in vanilla HTML, CSS,
 and JS — no frameworks, no build step.
 
-**[→ view the live site](valware)**
+**[→ view the live site](https://vala005.github.io/valware/)**
 
 ## what's inside
 
